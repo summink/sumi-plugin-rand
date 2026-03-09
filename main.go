@@ -1,26 +1,47 @@
-package main
+package sumi_rand
 
-import "github.com/InkShaStudio/go-command"
+import (
+	"fmt"
+	"myPlugin/random"
+	"strings"
 
-func helloWorld() *command.SCommand {
-	target := command.
-		NewCommandArg[string]("target").
-		ChangeDescription("say hello target").
-		ChangeValue("world!")
+	"github.com/InkShaStudio/go-command"
+	"github.com/atotto/clipboard"
+)
+
+func RegisterCommand() *command.SCommand {
+	i := command.NewCommandFlag[bool]("int").ChangeDescription("set random int")
+	f := command.NewCommandFlag[bool]("float").ChangeDescription("set random float")
+	s := command.NewCommandFlag[bool]("string").ChangeDescription("set random string").ChangeValue(true)
+	r := command.NewCommandFlag[[]string]("ranges").ChangeDescription("set random charsets").ChangeValue([]string{})
+
+	copy := command.NewCommandFlag[bool]("copy").ChangeDescription("copy random value content to clipboard").ChangeValue(false).ChangeShort("")
+	max := command.NewCommandFlag[int]("max").ChangeDescription("max number or max string length").ChangeValue(10000).ChangeShort("")
+	min := command.NewCommandFlag[int]("min").ChangeDescription("min number or min string length").ChangeValue(1).ChangeShort("")
 
 	cmd := command.
-		NewCommand("hello").
-		ChangeDescription("say hello").
-		AddArgs(target).
+		NewCommand("rand").
+		ChangeDescription("Random value").
+		AddFlags(i, f, s, max, min, copy, r).
 		RegisterHandler(func(cmd *command.SCommand) {
-			println("hello " + target.Value)
+			var value string
+
+			if len(r.Value) > 0 {
+				value = random.RandomStringn(min.Value, max.Value, strings.Join(r.Value, ""))
+			} else if i.Value {
+				value = fmt.Sprint(random.RandomIntn(min.Value, max.Value))
+			} else if f.Value {
+				value = fmt.Sprint(random.RandomFloatn(min.Value, max.Value))
+			} else if s.Value {
+				value = random.RandomString(min.Value, max.Value)
+			}
+
+			println(value)
+
+			if copy.Value {
+				clipboard.WriteAll(string(value))
+			}
 		})
 
 	return cmd
-}
-
-func main() {
-	cmd := command.RegisterCommand(helloWorld())
-
-	cmd.Execute()
 }

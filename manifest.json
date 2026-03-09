@@ -1,11 +1,12 @@
 {
-  "name": "my-plugin",
-  "version": "0.0.1",
-  "description": "my-plugin",
-  "author": "Me",
-  "license": "Unknown",
-  "repo": "https://github.com/my/my-plugin",
-  "doc": "https://github.com/my/my-plugin",
+  "$schema": "https://raw.githubusercontent.com/InkSha/sumi/refs/heads/master/schema/v1/plugin.schema.json",
+  "name": "sumi-plugin-rand",
+  "version": "1.0.0",
+  "description": "Random value",
+  "author": "InkSha",
+  "license": "MIT",
+  "repo": "https://github.com/summink/sumi-plugin-rand",
+  "doc": "https://github.com/summink/sumi-plugin-rand",
   "platforms": [
     {
       "os": "windows",
@@ -26,6 +27,57 @@
   ],
   "tags": [
     "plugin",
-    "my"
+    "random",
+    "int",
+    "float",
+    "string"
+  ],
+  "args": [],
+  "flags": [
+    {
+      "name": "int",
+      "type": "bool",
+      "description": "set random int",
+      "required": false
+    },
+    {
+      "name": "float",
+      "type": "bool",
+      "description": "set random float",
+      "required": false
+    },
+    {
+      "name": "string",
+      "type": "bool",
+      "description": "set random string",
+      "required": false,
+      "value": "true"
+    },
+    {
+      "name": "range",
+      "type": "string[]",
+      "description": "set random charsets",
+      "required": false
+    },
+    {
+      "name": "copy",
+      "type": "bool",
+      "description": "copy random value to clipboard",
+      "required": false
+    },
+    {
+      "name": "max",
+      "type": "int",
+      "description": "max number or max string length",
+      "required": false,
+      "value": "10000"
+    },
+    {
+      "name": "min",
+      "type": "int",
+      "description": "min number or min string length",
+      "required": false,
+      "value": "1"
+    }
   ]
 }
