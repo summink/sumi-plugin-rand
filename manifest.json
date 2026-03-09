@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/InkSha/sumi/refs/heads/master/schema/v1/plugin.schema.json",
   "name": "sumi-plugin-rand",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Random value",
   "author": "InkSha",
   "license": "MIT",
